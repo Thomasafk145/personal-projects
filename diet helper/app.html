@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <title>Random Quote Generator</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background: #1e1e1e;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+          }
+
+          .quote-box {
+            background: #2c2c2c;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            text-align: center;
+          }
+
+          #quote {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+          }
+
+          button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #4caf50;
+            color: white;
+          }
+
+          button:hover {
+            background: #43a047;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="quote-box">
+          <div id="quote">Loading...</div>
+          <button id="newQuoteBtn">New Quote</button>
+        </div>
+
+        <script>
+          let quotes = [];
+
+          async function loadQuotes() {
+            try {
+              const response = await fetch("quotes.json");
+              const data = await response.json();
+
+              // IMPORTANT FIX
+              quotes = data.quotes;
+
+              showRandomQuote();
+            } catch (error) {
+              document.getElementById("quote").textContent =
+                "Failed to load quotes.";
+              console.error(error);
+            }
+          }
+
+          function showRandomQuote() {
+            if (!quotes.length) return;
+
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById("quote").textContent =
+              quotes[randomIndex].quote;
+          }
+
+          document
+            .getElementById("newQuoteBtn")
+            .addEventListener("click", showRandomQuote);
+
+          loadQuotes();
+        </script>
+      </body>
+    </html>
+  </body>
+</html>
