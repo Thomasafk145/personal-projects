@@ -14,7 +14,7 @@ app.get("/quotes.json", (req, res) => {
 
 // Root route
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "app.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.listen(PORT, () => {
